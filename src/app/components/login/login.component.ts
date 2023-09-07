@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,7 @@ export class LoginComponent implements OnInit{
   eyeIcon: string = "fa-eye-slash";
   loginForm!: FormGroup;
 
-  constructor(private fb: FormBuilder){   }
+  constructor(private fb: FormBuilder, private auth: AuthService){   }
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -28,7 +29,7 @@ export class LoginComponent implements OnInit{
 
   }
 
-  onSubmit() {
+  onLogin() {
     if (this.loginForm.valid) {
 
     }
