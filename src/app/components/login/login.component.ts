@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit{
         error: (err) => {
           //alert(err?.error.message)
           //toastr
-          this.toast.error({detail:"ERROR",summary:"Something went wrong",duration:5000})
+          this.toast.error({detail:"ERROR",summary:err?.error.message,duration:5000})
         }
 
       })
@@ -53,7 +53,7 @@ export class LoginComponent implements OnInit{
 
     else {
       this.validateFormFields(this.loginForm);
-      alert('Your form is invalid')
+      this.toast.error({detail:"ERROR",summary:"Your form is invalid",duration:5000})
     }
   }
 
