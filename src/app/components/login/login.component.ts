@@ -36,14 +36,12 @@ export class LoginComponent implements OnInit{
       this.auth.login(this.loginForm.value)
       .subscribe({
         next: (res) => {
-          //alert(res.message)
           //toastr
           this.toast.success({detail:"SUCCESS",summary:"Login Successful",duration:5000})
           this.loginForm.reset()
           this.router.navigate(['dashboard'])
         },
         error: (err) => {
-          //alert(err?.error.message)
           //toastr
           this.toast.error({detail:"ERROR",summary:err?.error.message,duration:5000})
         }
@@ -53,6 +51,7 @@ export class LoginComponent implements OnInit{
 
     else {
       this.validateFormFields(this.loginForm);
+      //toastr
       this.toast.error({detail:"ERROR",summary:"Your form is invalid",duration:5000})
     }
   }

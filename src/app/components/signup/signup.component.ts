@@ -43,13 +43,13 @@ export class SignupComponent implements OnInit{
       this.auth.signUp(this.signUpForm.value)
       .subscribe({
         next: (res) => {
-          //alert(res.message)
+          //toastr
           this.toast.success({detail:"SUCCESS",summary:res.message,duration:5000})
           this.signUpForm.reset()
           this.router.navigate(['login'])
         },
         error: (err) => {
-          //alert(err?.error.message)
+          //toastr
           this.toast.error({detail:"ERROR",summary:err?.error.message,duration:5000})
         }
       })
@@ -58,6 +58,7 @@ export class SignupComponent implements OnInit{
     else {
 
       this.validateFormFields(this.signUpForm);
+      //toastr
       this.toast.error({detail:"ERROR",summary:"Your form is invalid",duration:5000})
 
 
