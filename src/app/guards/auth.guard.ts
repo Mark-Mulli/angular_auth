@@ -1,20 +1,19 @@
-import {CanActivate, Router} from '@angular/router';
+import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
-import { Injectable } from '@angular/core';
+import { Inject, inject } from '@angular/core';
 import { NgToastService } from 'ng-angular-popup';
 
+export const authGuard: CanActivateFn = (route, state) => {
+  const auth: AuthService = inject(AuthService)
+  const router: Router = inject(Router)
+  const toast: NgToastService = inject(NgToastService)
 
-export class authGuard implements CanActivate  {
-  constructor(private auth: AuthService,private router: Router, private toast: NgToastService){}
-
-  canActivate(): boolean  {
-    if (this.auth.isLoggedIn()) {
-      return true;
-    }
-    else {
-      this.toast.error({detail:"ERROR",summary:"Please Login First!"})
-      this.router.navigate(['login'])
-      return false;
-    }
+  if (auth.isLoggedIn()) {
+    return true;
+  }
+  else {
+    toast.error({detail:"ERROR",summary:"Please Login First!"})
+    router.navigate(['login'])
+    return false;
   }
 };
