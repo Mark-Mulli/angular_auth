@@ -1,19 +1,24 @@
-import { CanActivateFn, Router } from '@angular/router';
+import { Injectable } from '@angular/core';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
-import { Inject, inject } from '@angular/core';
-import { NgToastService } from 'ng-angular-popup';
+import { Observable } from 'rxjs';
 
-export const authGuard: CanActivateFn = (route, state) => {
-  const auth: AuthService = inject(AuthService)
-  const router: Router = inject(Router)
-  const toast: NgToastService = inject(NgToastService)
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthGuard implements CanActivate {
 
-  if (auth.isLoggedIn()) {
-    return true;
+  constructor(private authService: AuthService, private router: Router) {}
+
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
+    if (this.authService.isLoggedIn()) {
+      return true;
+    } else {
+      // Redirect to the login page if not authenticated
+      return this.router.createUrlTree(['/login']);
+    }
   }
-  else {
-    toast.error({detail:"ERROR",summary:"Please Login First!"})
-    router.navigate(['login'])
-    return false;
-  }
-};
+}
