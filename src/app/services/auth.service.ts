@@ -19,4 +19,16 @@ login(loginObj:any) {
 
 }
 
+storeToken(tokenValue:string){
+  localStorage.setItem('token',tokenValue)
+}
+
+getToken() {
+  return localStorage.getItem('token')
+}
+
+isLoggedIn(): boolean {
+  return !!localStorage.getItem('token')
+}
+
 }
